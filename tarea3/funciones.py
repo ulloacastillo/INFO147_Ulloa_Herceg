@@ -19,11 +19,14 @@ def KNN(X, Y, Z, k=5, p=2.):
     for i in range(M):
         for j in range(N):
             dist[i, j] = np.power(np.sum(np.power(np.absolute(Z[i] - X[j]), p)), 1./p)
+    
     neighbours = np.argsort(dist, axis=1)[:, :k]
+    
     Z_Y = np.zeros(shape=(M, ))
     for i in range(M):
         criterion = np.zeros(shape=(len(C),))
         for c in C:
             criterion[c] = np.sum(1./dist[i, neighbours[i]][Y[neighbours[i]] == c])
         Z_Y[i] = np.argmax(criterion)
+    
     return Z_Y
